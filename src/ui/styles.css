@@ -1,0 +1,109 @@
+:root {
+  --bg: #0e1116;
+  --panel: #141a22;
+  --panel-2: #1b232e;
+  --line: #2a3442;
+  --fg: #d6dde5;
+  --muted: #8a95a5;
+  --accent: #4f8cff;
+  --good: #3ecf8e;
+  --warn: #f2a93b;
+  --bad:  #ef5a6f;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, Helvetica, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+html, body, #app { height: 100%; margin: 0; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--sans);
+  font-size: 13px;
+  line-height: 1.35;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+button {
+  font: inherit;
+  color: var(--fg);
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+button:hover { border-color: var(--accent); color: #fff; }
+button.primary { background: var(--accent); border-color: transparent; color: #fff; }
+input, select {
+  font: inherit;
+  background: var(--panel-2);
+  color: var(--fg);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 5px 8px;
+}
+.mono { font-family: var(--mono); font-size: 12px; }
+.muted { color: var(--muted); }
+
+/* -------- Layout: split center-of-control view -------- */
+.app {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  grid-template-rows: 44px 1fr 28px;
+  grid-template-areas:
+    "top top"
+    "map side"
+    "bot bot";
+  height: 100vh;
+  width: 100vw;
+}
+.topbar { grid-area: top; border-bottom: 1px solid var(--line); background: var(--panel); display: flex; align-items: center; padding: 0 12px; gap: 10px; }
+.topbar .title { font-weight: 600; letter-spacing: 0.02em; }
+.topbar .sep { flex: 1; }
+.side   { grid-area: side; border-left: 1px solid var(--line); background: var(--panel); overflow-y: auto; padding: 10px 12px; display: flex; flex-direction: column; gap: 12px; }
+.maparea{ grid-area: map; position: relative; background: #0a0d12; }
+.statusbar { grid-area: bot; border-top: 1px solid var(--line); background: var(--panel); padding: 0 10px; font-family: var(--mono); font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 18px; }
+canvas.map { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+.card { border: 1px solid var(--line); background: var(--panel-2); border-radius: 8px; padding: 10px; }
+.card h3 { margin: 0 0 8px 0; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); }
+.row { display: flex; gap: 8px; align-items: center; }
+.row + .row { margin-top: 6px; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 10px; }
+
+.alert-item { border-left: 3px solid var(--bad); padding: 6px 8px; background: #23151c; border-radius: 4px; margin-bottom: 6px; }
+.alert-item.warn { border-left-color: var(--warn); background: #211c12; }
+.rec-item { border-left: 3px solid var(--accent); padding: 6px 8px; background: #121c2a; border-radius: 4px; margin-bottom: 6px; }
+
+.slider-row { display: flex; align-items: center; gap: 10px; }
+.slider-row input[type=range] { flex: 1; }
+
+/* -------- Mode picker home (small, centered) -------- */
+.home {
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
+}
+.home .box {
+  width: min(520px, 92vw);
+  border: 1px solid var(--line);
+  background: var(--panel);
+  border-radius: 10px;
+  padding: 22px 22px 18px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.home h1 { margin: 0 0 2px 0; font-size: 18px; letter-spacing: 0.02em; }
+.home p  { margin: 0; color: var(--muted); }
+.home .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px; }
+
+/* Road supervisor: vertical list of stops + buttons */
+.sv-wrap { height: 100vh; display: flex; flex-direction: column; }
+.sv-list { flex: 1; overflow-y: auto; padding: 10px; gap: 8px; display: flex; flex-direction: column; }
+.sv-stop { border: 1px solid var(--line); border-radius: 8px; padding: 10px; background: var(--panel-2); }
+.sv-stop h4 { margin: 0 0 6px 0; font-size: 13px; }
+.sv-actions { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+
+/* Validador trayecto */
+.val-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.val-kpi { font-family: var(--mono); padding: 10px; border: 1px solid var(--line); border-radius: 6px; }
+.val-kpi .big { font-size: 22px; color: var(--accent); }
